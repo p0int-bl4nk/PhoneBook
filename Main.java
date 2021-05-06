@@ -7,29 +7,33 @@ import java.nio.file.Paths;
 public class Main {
 
     public static void main(String[] args) {
-        try {
-            String[] findData = readFile("/home/stellarloony/find.txt").split("\r\n");
-            String[] directoryData = readFile("/home/stellarloony/directory.txt").split("\r\n");
-            int[] phone = new int[directoryData.length];
-            for (int i = 0; i < directoryData.length; i++) {
-                String[] name = directoryData[i].split(" ");
-                phone[i] = Integer.parseInt(name[0]);
-                if (name.length > 2) {
-                    directoryData[i] = name[1] + " " + name[2];
-                } else {
-                    directoryData[i] = name[1];
+
+            if (args. length < 2) {
+                System.out.println("Two files required!");
+            } else {
+                try {
+                    String[] findData = readFile(args[0]).split("\r\n");
+                    String[] directoryData = readFile(args[1]).split("\r\n");
+                    int[] phone = new int[directoryData.length];
+                    for (int i = 0; i < directoryData.length; i++) {
+                        String[] name = directoryData[i].split(" ");
+                        phone[i] = Integer.parseInt(name[0]);
+                        if (name.length > 2) {
+                            directoryData[i] = name[1] + " " + name[2];
+                        } else {
+                            directoryData[i] = name[1];
+                        }
+                    }
+
+                    long limit = linearSearch(findData, directoryData);
+                    bubbleSortJumpSearch(findData, directoryData, limit);
+                    quickSortBinarySearch(findData, directoryData);
+                    hashTable(findData, directoryData, phone);
+                } catch (IOException e) {
+                    System.out.printf("An error occurred: %s", e.getMessage());
+                    e.printStackTrace();
                 }
             }
-
-            long limit = linearSearch(findData, directoryData);
-            bubbleSortJumpSearch(findData, directoryData, limit);
-            quickSortBinarySearch(findData, directoryData);
-            hashTable(findData, directoryData, phone);
-
-        } catch (IOException e) {
-            System.out.printf("An error occurred: %s", e.getMessage());
-            e.printStackTrace();
-        }
     }
 
     static long linearSearch(String[] namesToFind, String[] directoryToSearch) {
