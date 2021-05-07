@@ -1,0 +1,8 @@
+package phonebook;
+
+enum TYPE {
+    LINEAR_SEARCH,
+    BUBBLE_SORT_AND_JUMP_SEARCH,
+    QUICK_SORT_AND_BINARY_SEARCH,
+    HASH_TABLE,
+}
